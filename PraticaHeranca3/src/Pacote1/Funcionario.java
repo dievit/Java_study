@@ -15,9 +15,25 @@ public class Funcionario {
     
     public Funcionario(String nome, int CPF, double salario){
         this.nome = nome;
-        this.cpf = cpf;
+        this.cpf = CPF;
         this.salario = salario;
 }
+    
+    public String getNome() {
+        return nome;
+    }
+    
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    
+    public int getCpf(){
+        return cpf;
+    }
+    
+    public void setCpf(int cpf){
+        this.cpf = cpf;
+    }
     
     
 }
