@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package pacote5;
+package pacote1;
 
 import java.util.Scanner;
 
@@ -10,12 +10,9 @@ import java.util.Scanner;
  *
  * @author mto_l
  */
-public class exe5 {
+public class Exercicio5 {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    public void executar() {
         Scanner ler = new Scanner(System.in);
         int n = 8;
         int vetor[] = new int[n];
@@ -32,10 +29,16 @@ public class exe5 {
             vetor[n-4+i] = temp;
                   
         }
+        ler.close();
+        StringBuilder resultado = new StringBuilder();
         for(i=0; i<n; i++){
-            System.out.println(vetor[i] +" ");
+            resultado.append(vetor[i]);
+            if(i>=0){
+                resultado.append(", ");
+            }
+            
         }
-        // TODO code application logic here
+     System.out.println("Trocando os 4 ultimos com os 4 primeiros, o resultado e: " +resultado.toString());
     }
     
 }

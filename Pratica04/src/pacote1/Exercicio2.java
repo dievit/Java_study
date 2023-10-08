@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package pacote2;
+package pacote1;
 
 import java.util.Scanner;
 
@@ -12,6 +12,10 @@ import java.util.Scanner;
  */
 public class Exercicio2 {
     public void executar(){
+        System.out.println("Escreva um programa principal que: ");
+        System.out.println("a) Leia 10 numeros (vetor inteiros) a partir de valores digitados pelo usuario.");
+        System.out.println("b) Imprima na tela apenas os valores maiores e igual a20.");
+        
         Scanner ler = new Scanner(System.in);
         int n = 10;
         int vetor[] = new int[n];

@@ -1,4 +1,4 @@
-package pacote4;
+package pacote1;
 
 import java.util.Scanner;
 
@@ -12,11 +12,7 @@ import java.util.Scanner;
  * @author mto_l
  */
 public class Exercicio4 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    public void executar(){
         Scanner ler = new Scanner(System.in);
         int n = 4;
         int vetor[] = new int [n];
@@ -28,12 +24,13 @@ public class Exercicio4 {
             
         }
         ler.close();
-        
+        StringBuilder resultado = new StringBuilder();
         for(i=n -1; i>=0; i--){
-            System.out.println(vetor[i]);
-        }
-        
-        // TODO code application logic here
+            resultado.append(vetor[i]);
+            if(i>0){
+            resultado.append(", ");
+        }    // TODO code application logic here
     }
-    
+    System.out.println("A sequencia inversa e: " +resultado.toString());
+    }
 }

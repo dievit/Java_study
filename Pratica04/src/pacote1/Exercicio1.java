@@ -12,6 +12,9 @@ import java.util.Scanner;
  */
 public class Exercicio1 {
     public void executar(){
+        System.out.println("01. Escreva um programa principal que: ");
+        System.out.println("a) Leia 10 numeros (vetor inteiros) a partir de valores digitados pelo usuario.");
+        System.out.println("b) Imprima na tela os 10 numeros.");
         Scanner ler = new Scanner(System.in);
         int n = 10;
         int vetor[] = new int[n];
@@ -22,7 +25,7 @@ public class Exercicio1 {
             vetor[i] = ler.nextInt();
         }
         for(i=0; i<10; i++){
-        System.out.println("Numeros inseridos pelo usuario: " +vetor[i]);
+            System.out.println("Numeros inseridos pelo usuario: " +vetor[i]);
     }
     }
     
