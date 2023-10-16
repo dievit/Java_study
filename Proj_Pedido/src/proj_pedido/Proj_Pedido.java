@@ -18,19 +18,32 @@ public class Proj_Pedido {
         it1 = new Item(100,3,3);
         it2 = new Item(101, 2, 4);
         it3 = new Item(102,1,5);
-        it4 = new Item(103, 20, 30);
-        it5 = new Item(104, 12,22);
-        it6 = new Item(105, 7, 102);
-        it7 = new Item(106, 15, 25);
-        Pedido pedido1 = new Pedido (1001, "Ana");
+        
+        Data dataCadastro1 = new Data(16,10,2023);
+        Cliente cliente1 = new Cliente("Joao", 1234512354, dataCadastro1);
+        
+        Data dataCadastro2 = new Data(27,03,2007);
+        Cliente cliente2 = new Cliente("Maria", 1283123912, dataCadastro2);
+        
+       
+        Pedido pedido1 = new Pedido (1001,  cliente1);
         
         pedido1.adicionaItem(it1);
         pedido1.adicionaItem(it2);
         pedido1.adicionaItem(it3);
         
+        Pedido pedido2 = new Pedido(1002, cliente2);
+        
+        pedido2.adicionaItem(it1);
+        pedido2.adicionaItem(it2);
+        pedido2.adicionaItem(it3);
+        pedido2.adicionaItem(it3);
+        
         pedido1.imprimir();
-        pedido1.removeItem(it3);
-        pedido1.imprimir();
+        cliente1.imprimir();
+        
+        pedido2.imprimir();
+        cliente2.imprimir();
         
         
         // TODO code application logic here

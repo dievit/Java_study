@@ -12,12 +12,12 @@ import java.util.List;
 
 public class Pedido {
     private int numero;
-    private String cliente;
+    private Cliente cliente;
     private List<Item> lista;
     
-    public Pedido(int numero, String cliente){
+    public Pedido(int numero, Cliente cliente){
         this.numero=numero;
-        this.cliente=cliente;
+        this.cliente = cliente;
         lista=new ArrayList<Item>();
     }
     public void adicionaItem(Item item){
@@ -36,7 +36,7 @@ public class Pedido {
     }
     public void imprimir(){
         System.out.println("Pedido: " +numero);
-        System.out.println("Cleinte: " +cliente);
+        System.out.println("Cliente: " +cliente);
         
         System.out.println("Itens: ");
         for(int i=0; i<lista.size(); i++){
