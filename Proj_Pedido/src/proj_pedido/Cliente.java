@@ -23,9 +23,9 @@ public class Cliente {
     
     public void imprimir(){
         System.out.println("Cliente");
-        System.out.println("Nome: " + this.nome);
-        System.out.println("CPF: " + this.cpf);
-        System.out.println("Data de Nascimento: " + this.dataAniversario.formatarData());
+        System.out.println("Nome: " + nome);
+        System.out.println("CPF: " + cpf);
+        System.out.println("Data de Nascimento: " + dataAniversario.formatarData());
         System.out.println("\n");
         
     }

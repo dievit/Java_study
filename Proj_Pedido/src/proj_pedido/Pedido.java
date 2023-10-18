@@ -39,9 +39,8 @@ public class Pedido {
     }
     public void imprimir(){
         System.out.println("Pedido: " + numero);
-        System.out.println("Data do pedido: " + this.dataPedido.formatarData());
-        System.out.println("Cliente: " + clienteCadastro);
-        
+        System.out.println("Data do pedido: " + dataPedido.formatarData());
+        clienteCadastro.imprimir();
         System.out.println("Itens: ");
         for(int i=0; i<lista.size(); i++){
             Item umItem=lista.get(i);

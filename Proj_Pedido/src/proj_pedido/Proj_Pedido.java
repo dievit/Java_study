@@ -42,10 +42,8 @@ public class Proj_Pedido {
         pedido2.adicionaItem(it3);
         
         pedido1.imprimir();
-        cliente1.imprimir();
-        
         pedido2.imprimir();
-        cliente2.imprimir();
+        
         
         
         // TODO code application logic here
