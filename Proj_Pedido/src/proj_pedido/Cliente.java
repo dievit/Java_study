@@ -11,19 +11,21 @@ package proj_pedido;
 public class Cliente {
     private String nome;
     private int cpf;
-    private Data data;
+    private Data dataAniversario;
 
-    public Cliente(String nome, int cpf, Data data) {
+    public Cliente(String nome, int cpf, Data dataAniversario) {
         this.nome = nome;
         this.cpf = cpf;
-        this.data = data;
+        this.dataAniversario = dataAniversario;
         
     }
+
+    
     public void imprimir(){
         System.out.println("Cliente");
         System.out.println("Nome: " + this.nome);
         System.out.println("CPF: " + this.cpf);
-        System.out.println("Data: " + this.data.formatarData());
+        System.out.println("Data de Nascimento: " + this.dataAniversario.formatarData());
         System.out.println("\n");
         
     }

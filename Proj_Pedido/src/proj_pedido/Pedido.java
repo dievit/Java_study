@@ -12,14 +12,17 @@ import java.util.List;
 
 public class Pedido {
     private int numero;
-    private Cliente cliente;
     private List<Item> lista;
+    private Data dataPedido;
+    private Cliente clienteCadastro;
     
-    public Pedido(int numero, Cliente cliente){
-        this.numero=numero;
-        this.cliente = cliente;
+    public Pedido(int numero, Cliente clienteCadastro, Data dataPedido){
+        this.numero = numero;
+        this.dataPedido = dataPedido;
+        this.clienteCadastro = clienteCadastro;
         lista=new ArrayList<Item>();
     }
+    
     public void adicionaItem(Item item){
         lista.add(item);
     }
@@ -35,8 +38,9 @@ public class Pedido {
         return total;
     }
     public void imprimir(){
-        System.out.println("Pedido: " +numero);
-        System.out.println("Cliente: " +cliente);
+        System.out.println("Pedido: " + numero);
+        System.out.println("Data do pedido: " + this.dataPedido.formatarData());
+        System.out.println("Cliente: " + clienteCadastro);
         
         System.out.println("Itens: ");
         for(int i=0; i<lista.size(); i++){
