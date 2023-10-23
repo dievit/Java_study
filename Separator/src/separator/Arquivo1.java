@@ -23,35 +23,43 @@ public class Arquivo1 {
         try{FileWriter fw = new FileWriter("D:\\Faculdade\\Semestre - 2\\LP - Juliana\\exemplo1.txt");
             BufferedWriter escrita = new BufferedWriter(fw);
             
-            escrita.write("frase Um");
-            escrita.write("\n");
-            escrita.write("frase Dois");
+            escrita.write("frase Linha1");
+            escrita.newLine();
             
-            escrita.close();
-        }
-        catch(IOException ex){
-            System.out.println("\nProblemas ao abrir o arquivo.");
-                 
-        }
-    
-        try{
+            escrita.flush();
+            
             FileReader fr = new FileReader("D:\\Faculdade\\Semestre - 2\\LP - Juliana\\exemplo1.txt");
             BufferedReader leitor = new BufferedReader(fr);
             String linha;
             linha = leitor.readLine();
             System.out.println(linha);
             do{
-            linha = leitor.readLine();
+                linha = leitor.readLine();
                     if(linha != null){
                         System.out.println (linha);
                     }
             }while(linha != null);
+            
+            escrita.write("frase Dois");
+            
+            
             leitor.close();
+            escrita.close();
+            
+            
         }
-        catch (IOException ex){
+        catch(IOException ex){
             System.out.println("\nProblemas ao abrir o arquivo.");
+                 
         }
-        }   
+       
+        }
+    }
+
+    
+        
+            
+       
             
             
 
@@ -71,6 +79,6 @@ public class Arquivo1 {
             //for (int i=0; i < vet_arquivos.length; i++)
                 //System.out.println((i+1)+ "o arquivo: " + vet_arquivos[i]);
         //}
-}
+
     
 
