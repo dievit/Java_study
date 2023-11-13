@@ -225,7 +225,7 @@ public class ClientGUI extends javax.swing.JFrame {
     if(test) System.out.println("Verifique os campos vazios!");
     else{
         ClientDAO dao = new ClientDAO();
-        dao.adiciona(client);
+        
     }
         
     
