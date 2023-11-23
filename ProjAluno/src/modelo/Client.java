@@ -9,17 +9,18 @@ package modelo;
  * @author mto_l
  */
 public class Client {
-    private int cpf;
+    private String cpf;
     private String name;
     private String birthday;
     private double weight;
     private double height;
+    
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 

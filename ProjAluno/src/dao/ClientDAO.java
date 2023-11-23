@@ -20,13 +20,14 @@ public class ClientDAO {
     }
     
     public void addName(Client client){
-        String sql = "INSERT TO users(cpf, name, birthday, weight, height) VALUES(?)";
+        String sql = "INSERT INTO users(cpf, name, birthday, weight, height) VALUES(?, ?, ?, ?, ?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setInt(1,client.getCpf());
+            stmt.setString(1,client.getCpf());
             stmt.setString(2, client.getName());
-            stmt.setDouble(3,client.getWeight());
-            stmt.setDouble(4,client.getHeight());
+            stmt.setString(3, client.getBirthday());
+            stmt.setDouble(4,client.getWeight());
+            stmt.setDouble(5,client.getHeight());
             stmt.execute();
             stmt.close();
         }

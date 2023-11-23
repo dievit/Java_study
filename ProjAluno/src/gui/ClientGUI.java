@@ -21,6 +21,7 @@ public class ClientGUI extends javax.swing.JFrame {
      */
     public ClientGUI() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -67,6 +68,12 @@ public class ClientGUI extends javax.swing.JFrame {
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
+            }
+        });
+
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
             }
         });
 
@@ -209,11 +216,12 @@ public class ClientGUI extends javax.swing.JFrame {
         }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    Client client = new Client();
     try{
         LocalDate birthday = LocalDate.parse(jTextField5.getText(), formatter);
-        Client client = new Client();
+        
             client.setName(jTextField3.getText());    
-            client.setCpf(Integer.parseInt(jTextField4.getText()));
+            client.setCpf(jTextField4.getText());
             client.setBirthday(String.valueOf(birthday));
             client.setWeight(Double.parseDouble(jTextField6.getText()));
             client.setHeight(Double.parseDouble(jTextField7.getText()));
@@ -225,11 +233,14 @@ public class ClientGUI extends javax.swing.JFrame {
     if(test) System.out.println("Verifique os campos vazios!");
     else{
         ClientDAO dao = new ClientDAO();
-        
+        dao.addName(client);
+        JOptionPane.showMessageDialog(null, "cliente cadastrado com sucesso!");
     }
-        
-    
-            
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
             
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -239,12 +250,17 @@ public class ClientGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        setVisible(false);
+        new MenuPrincipal().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments

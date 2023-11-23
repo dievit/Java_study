@@ -8,31 +8,29 @@ import gym.ConnectionGym;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 
 public class WeightUpdateDAO {
-    private Connection connection;
+    private static Connection connection = new ConnectionGym().getConnection();   
     
-    public WeightUpdateDAO(){
-        this.connection = new ConnectionGym().getConnection();   
-    }
-    public void updateWeight(int clientId, double newWeight){
+    public static void updateWeight(String cpf, double newWeight){
         try{
-            String updateSql = "UPDATE users SET weight = (?) WHERE client_id = (?)";
-            PreparedStatement updateStmt = connection.prepareStatement(updateSql);
-            updateStmt.setDouble(1, newWeight);
-            updateStmt.setInt(2, clientId);
-            updateStmt.executeUpdate();
-            updateStmt.close();  
+            String updateSql = "UPDATE users SET weight = ? WHERE cpf = ?";
+            try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                updateStmt.setDouble(1, newWeight);
+                updateStmt.setString(2, cpf);
+                updateStmt.executeUpdate();
+            }  
             
-            String insertSql = "INSERT INTO weight_evolution (client_id, date, weight) VALUES (?,?,?)";
-            PreparedStatement insertStmt = connection.prepareStatement(insertSql);
-            insertStmt.setInt(1,clientId);
-            insertStmt.setDate(2, new java.sql.Date(new Date().getTime()));
-            insertStmt.setDouble(3,newWeight);
-            insertStmt.executeUpdate();
-            insertStmt.close();
+            String insertSql = "INSERT INTO weight_evolution (client_id, register_date, weight) VALUES (?,?,?)";
+            try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
+                insertStmt.setString(1,cpf);
+                insertStmt.setString(2, String.valueOf(LocalDate.now()));
+                insertStmt.setDouble(3,newWeight);
+                insertStmt.executeUpdate();
+            }
             
             }
         catch(SQLException e){
