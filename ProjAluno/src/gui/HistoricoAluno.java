@@ -20,7 +20,9 @@ public class HistoricoAluno extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
     }
-
+    public double CalcularImc(double weight, double height){
+        return weight/Math.pow(height, 2);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,15 +159,16 @@ public class HistoricoAluno extends javax.swing.JFrame {
             statement.setString(1, client_id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 StringBuilder resultText = new StringBuilder();
+                resultText.append("IMC: "+CalcularImc(Double.parseDouble(getWeight(client_id)),Double.parseDouble(getHeight(client_id)))+"\n");
                 while (resultSet.next()) {
                     String dataRegistro = resultSet.getString("register_date");
                     double weight = resultSet.getDouble("weight");
-                    // Faça algo com os dados, como exibir na tela
+                    
                     resultText.append("Data: ").append(dataRegistro).append(", Peso: ").append(weight).append("\n");
                 }
 
                 if (resultText.length() > 0) {
-                    JOptionPane.showMessageDialog(this, resultText.toString(), "Histórico de Peso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, resultText.toString(), "Histórico de Peso do " + getUserName(client_id), JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Nenhum resultado encontrado para o CPF informado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -173,10 +176,56 @@ public class HistoricoAluno extends javax.swing.JFrame {
         }
     
     } catch (SQLException e) {
-        e.printStackTrace();
-    }// TODO add your handling code here:
+        e.printStackTrace(); 
+    }
+            
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    private String getUserName(String cpf) throws SQLException {
+    String sql = "SELECT client_name FROM users WHERE cpf = ?";
+    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec");
+    PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, cpf);
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getString("client_name");
+            }
+        }
+    } catch(Exception e) {
+    
+    }
+    return "Nome não encontrado";
+}
+    private String getHeight(String cpf) throws SQLException {
+    String sql = "SELECT height FROM users WHERE cpf = ?";
+    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec");
+    PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, cpf);
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getString("height");
+            }
+        }
+    } catch(Exception e) {
+    
+    }
+    return "Nome não encontrado";
+}
+    private String getWeight(String cpf) throws SQLException {
+    String sql = "SELECT weight FROM users WHERE cpf = ?";
+    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec");
+    PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, cpf);
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getString("weight");
+            }
+        }
+    } catch(Exception e) {
+    
+    }
+    return "Nome não encontrado";
+}
     /**
      * @param args the command line arguments
      */
