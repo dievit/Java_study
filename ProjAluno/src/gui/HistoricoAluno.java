@@ -21,8 +21,9 @@ public class HistoricoAluno extends javax.swing.JFrame {
         
     }
     public double CalcularImc(double weight, double height){
-        return weight/Math.pow(height, 2);
+        return Math.round((weight / Math.pow(height, 2)) * 100.0) / 100.0;
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,12 +160,15 @@ public class HistoricoAluno extends javax.swing.JFrame {
             statement.setString(1, client_id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 StringBuilder resultText = new StringBuilder();
-                resultText.append("IMC: "+CalcularImc(Double.parseDouble(getWeight(client_id)),Double.parseDouble(getHeight(client_id)))+"\n");
+                
+                double weight = Double.parseDouble(getWeight(client_id));
+                resultText.append("Peso atual: ").append(weight).append("\n").append("IMC: "+CalcularImc(Double.parseDouble(getWeight(client_id)),Double.parseDouble(getHeight(client_id)))+"\n");
                 while (resultSet.next()) {
+                    String weightEvolutionId = resultSet.getString("weight_evolution_id");
                     String dataRegistro = resultSet.getString("register_date");
-                    double weight = resultSet.getDouble("weight");
                     
-                    resultText.append("Data: ").append(dataRegistro).append(", Peso: ").append(weight).append("\n");
+                    
+                    resultText.append("Id: ").append(weightEvolutionId+"   ").append("Data: ").append(dataRegistro).append(", Peso: ").append(weight).append("\n");
                 }
 
                 if (resultText.length() > 0) {

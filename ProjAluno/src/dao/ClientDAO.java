@@ -20,7 +20,7 @@ public class ClientDAO {
     }
     
     public void addName(Client client){
-        String sql = "INSERT INTO users(cpf, name, birthday, weight, height) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users(cpf, client_name, birthday, weight, height) VALUES(?, ?, ?, ?, ?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1,client.getCpf());
@@ -34,7 +34,53 @@ public class ClientDAO {
         catch(SQLException u){
             throw new RuntimeException(u);
         }
-        
+    }
+        private Connection getConnection() throws SQLException {
+        // Método para estabelecer conexão com o banco de dados
+        String url = "jdbc:mysql://localhost:3306/nome_do_seu_banco";
+        String username = "seu_usuario";
+        String password = "sua_senha";
+        return DriverManager.getConnection(url, username, password);
+    }
+
+    public void excluirPeso(int idPeso) {
+        String sql = "DELETE FROM weight_evolution WHERE id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPeso);
+            stmt.executeUpdate();
+            System.out.println("Peso excluído com sucesso!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Tratar exceções
+        }
+    }
+
+    public void excluirAluno(String cpf) {
+        String sqlDeletePesos = "DELETE FROM weight_evolution WHERE cpf_aluno = ?";
+        String sqlDeleteUsuario = "DELETE FROM users WHERE cpf = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmtDeletePesos = conn.prepareStatement(sqlDeletePesos);
+             PreparedStatement stmtDeleteUsuario = conn.prepareStatement(sqlDeleteUsuario)) {
+
+            // Excluir pesos do aluno
+            stmtDeletePesos.setString(1, cpf);
+            stmtDeletePesos.executeUpdate();
+
+            // Excluir usuário
+            stmtDeleteUsuario.setString(1, cpf);
+            stmtDeleteUsuario.executeUpdate();
+
+            System.out.println("Aluno e pesos associados excluídos com sucesso!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Tratar exceções
+        }
+    }
     
     }
-}
