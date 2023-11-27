@@ -185,7 +185,8 @@ public class HistoricoAluno extends javax.swing.JFrame {
                             StringBuilder resultText = new StringBuilder();
                             resultText.append("Peso atual: ").append(weight).append("\n");
                             resultText.append("IMC: ").append(imc).append("\n");
-
+                            
+                            //adiciona o histórico dos pesos juntamente com id
                             String exibirHistorico = "SELECT weight_evolution_id, register_date FROM weight_evolution WHERE client_id = ?";
                             try(PreparedStatement infoStatement = connection.prepareStatement(exibirHistorico)){
                                 infoStatement.setString(1, client_id);
@@ -222,6 +223,7 @@ public class HistoricoAluno extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
     private String getUserName(String cpf) throws SQLException {
+        //chama o nome do aluno na barra da janela jOptionPane
     String sql = "SELECT client_name FROM users WHERE cpf = ?";
     try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec");
     PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -237,6 +239,7 @@ public class HistoricoAluno extends javax.swing.JFrame {
     return "Nome não encontrado";
 }
     private String getHeight(String cpf) throws SQLException {
+        // Busca a altura no banco de dados para calcular o imc
     String sql = "SELECT height FROM users WHERE cpf = ?";
     try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec");
     PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -252,6 +255,7 @@ public class HistoricoAluno extends javax.swing.JFrame {
     return "Nome não encontrado";
 }
     private String getWeight(String cpf) throws SQLException {
+        // busca o peso atual na tabela users para cálculo do imc
     String sql = "SELECT weight FROM users WHERE cpf = ?";
     try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec");
     PreparedStatement statement = connection.prepareStatement(sql)) {

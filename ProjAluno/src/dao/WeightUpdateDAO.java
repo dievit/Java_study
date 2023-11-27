@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
 
 public class WeightUpdateDAO {
+    // Método para atualizar o peso adicionado como peso atual na tabela users
     private static Connection connection = new ConnectionGym().getConnection();   
     
     public static void updateWeight(String cpf, double newWeight){

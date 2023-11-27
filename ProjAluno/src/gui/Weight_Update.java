@@ -173,7 +173,7 @@ public class Weight_Update extends javax.swing.JFrame {
         double weight = Double.parseDouble(jTextField2.getText());
         
         
-        
+        // insere um novo peso alocando no cpf desejado
         try{
             WeightUpdateDAO.updateWeight(cpf, weight);
             JOptionPane.showMessageDialog(null, "Peso inserido com sucesso!");

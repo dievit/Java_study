@@ -206,6 +206,7 @@ public class ClientGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
         private boolean testaCamposVazios(javax.swing.JTextField j1, javax.swing.JTextField j2, javax.swing.JTextField j3, javax.swing.JTextField j4, javax.swing.JTextField j5){
+            // Método para testar se os campos estão vazios
             if(j1.getText().isEmpty()) return true;
             if(j2.getText().isEmpty()) return true;
             if(j3.getText().isEmpty()) return true;
@@ -215,7 +216,8 @@ public class ClientGUI extends javax.swing.JFrame {
             
         }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    // Garantindo a formatação da data para que o BD aceite
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     Client client = new Client();
     try{
         LocalDate birthday = LocalDate.parse(jTextField5.getText(), formatter);

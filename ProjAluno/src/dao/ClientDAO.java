@@ -20,6 +20,7 @@ public class ClientDAO {
     }
     
     public void addName(Client client){
+        // Método para inserir o aluno na tabela users
         String sql = "INSERT INTO users(cpf, client_name, birthday, weight, height) VALUES(?, ?, ?, ?, ?)";
         try{
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -36,7 +37,7 @@ public class ClientDAO {
         }
     }
         private Connection getConnection() throws SQLException {
-        // Método para estabelecer conexão com o banco de dados
+        // Método para estabelecer conexão com o banco de dados apesar de eu ter criado outra antes
         String url = "jdbc:mysql://localhost:3306/gym";
         String username = "root";
         String password = "fatec";
@@ -44,6 +45,7 @@ public class ClientDAO {
     }
 
     public void excluirPeso(int idPeso) {
+       // Método para excluir o peso através do id 
         String sql = "DELETE FROM weight_evolution WHERE id = ?";
 
         try (Connection conn = getConnection();
@@ -60,6 +62,7 @@ public class ClientDAO {
     }
 
     public void excluirAluno(String cpf) {
+        // Método para excluir o cadastro pelo cpf
         String sqlDeletePesos = "DELETE FROM weight_evolution WHERE cpf_aluno = ?";
         String sqlDeleteUsuario = "DELETE FROM users WHERE cpf = ?";
 
@@ -83,6 +86,7 @@ public class ClientDAO {
         }
     }
     public boolean clientExists(String cpf) {
+        // Método para verificar se o cliente existe antes de tentar inserir no banco de dados
         boolean exists = false;
         String sql = "SELECT COUNT(*) AS count FROM users WHERE cpf = ?";
 
