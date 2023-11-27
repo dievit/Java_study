@@ -124,23 +124,19 @@ public class ClientDAO {
     public static String getHistorico(String cpf){
     //adiciona o histórico dos pesos juntamente com id
         String resultados = "";
-        String exibirHistorico = "SELECT weight_evolution_id, register_date FROM weight_evolution WHERE client_id = ?";
+        String exibirHistorico = "SELECT weight_evolution_id, register_date, weight FROM weight_evolution WHERE client_id = ?";
         try(PreparedStatement infoStatement = connection.prepareStatement(exibirHistorico)){
             infoStatement.setString(1, cpf);
             ResultSet infoResult = infoStatement.executeQuery();
             try{
-                if(!infoResult.isBeforeFirst()){
-                    System.out.println("Historico not found");
+                if(!infoResult.isBeforeFirst()){ 
                 }else {
-                    System.out.println("entrou no else");
                     while (infoResult.next()){
-                    System.out.println("While loop ");
                         String weightEvolutionId = infoResult.getString("weight_evolution_id");
                         String dataRegistro = infoResult.getString("register_date");
                         String weight = infoResult.getString("weight");
-                        System.out.println("passou");
-                        //resultados += String.format("Id: %s   Data: %s, Peso: %s\n", 
-                        //    weightEvolutionId, dataRegistro, weight);
+                        resultados += String.format("Id: %s   Data: %s, Peso: %s\n", 
+                            weightEvolutionId, dataRegistro, weight);
                     }
                 }
             }catch (Exception e) {
