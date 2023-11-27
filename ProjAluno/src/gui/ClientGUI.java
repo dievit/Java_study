@@ -244,8 +244,7 @@ public class ClientGUI extends javax.swing.JFrame {
         }
     
         
-        dao.addName(client);
-        JOptionPane.showMessageDialog(null, "cliente cadastrado com sucesso!");
+        
     }
         jTextField3.setText("");
         jTextField4.setText("");

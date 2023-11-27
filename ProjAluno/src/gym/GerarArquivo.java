@@ -4,21 +4,19 @@
  */
 package gym;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author mto_l
  */
-public class ConnectionGym {
-    public static Connection getConnection(){
-        try{
-            return DriverManager.getConnection("jdbc:mysql://localhost/gym","root","fatec");
-        }
-        catch(SQLException excecao){
-            throw new RuntimeException(excecao);
-            
-        }
-    }
+public class GerarArquivo {
+    
 }
