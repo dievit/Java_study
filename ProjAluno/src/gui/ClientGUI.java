@@ -233,6 +233,15 @@ public class ClientGUI extends javax.swing.JFrame {
     if(test) System.out.println("Verifique os campos vazios!");
     else{
         ClientDAO dao = new ClientDAO();
+        
+        if (dao.clientExists(client.getCpf())) {
+            JOptionPane.showMessageDialog(null, "Cliente já cadastrado!");
+        } else {
+            dao.addName(client);
+            JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+        }
+    
+        
         dao.addName(client);
         JOptionPane.showMessageDialog(null, "cliente cadastrado com sucesso!");
     }

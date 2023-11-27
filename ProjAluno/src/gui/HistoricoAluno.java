@@ -40,6 +40,7 @@ public class HistoricoAluno extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -89,6 +90,8 @@ public class HistoricoAluno extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Gerar txt");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -97,7 +100,9 @@ public class HistoricoAluno extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
@@ -118,7 +123,9 @@ public class HistoricoAluno extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
 
@@ -152,36 +159,65 @@ public class HistoricoAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            String client_id = jTextField1.getText(); 
-            
-            try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec")) {
-        String sql = "SELECT * FROM weight_evolution WHERE client_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, client_id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                StringBuilder resultText = new StringBuilder();
-                
-                double weight = Double.parseDouble(getWeight(client_id));
-                resultText.append("Peso atual: ").append(weight).append("\n").append("IMC: "+CalcularImc(Double.parseDouble(getWeight(client_id)),Double.parseDouble(getHeight(client_id)))+"\n");
-                while (resultSet.next()) {
-                    String weightEvolutionId = resultSet.getString("weight_evolution_id");
-                    String dataRegistro = resultSet.getString("register_date");
-                    
-                    
-                    resultText.append("Id: ").append(weightEvolutionId+"   ").append("Data: ").append(dataRegistro).append(", Peso: ").append(weight).append("\n");
-                }
+   
+    String client_id = jTextField1.getText();
 
-                if (resultText.length() > 0) {
-                    JOptionPane.showMessageDialog(this, resultText.toString(), "Histórico de Peso do " + getUserName(client_id), JOptionPane.INFORMATION_MESSAGE);
+    try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/gym", "root", "fatec")) {
+        String userExistsQuery = "SELECT COUNT(*) AS count FROM users WHERE cpf = ?";
+        try (PreparedStatement existsStatement = connection.prepareStatement(userExistsQuery)) {
+            existsStatement.setString(1, client_id);
+            try (ResultSet existsResult = existsStatement.executeQuery()) {
+                existsResult.next();
+                int count = existsResult.getInt("count");
+                if (count > 0) {
+                    // Se o usuário existir, buscar peso e altura
+                    String weightStr = getWeight(client_id);
+                    String heightStr = getHeight(client_id);
+
+                    if (!weightStr.equals("Nome não encontrado") && !heightStr.equals("Nome não encontrado")) {
+                        try {
+                            double weight = Double.parseDouble(weightStr);
+                            double height = Double.parseDouble(heightStr);
+
+                            // Cálculo do IMC
+                            double imc = Math.round((weight / Math.pow(height, 2)) * 100.0) / 100.0;
+
+                            StringBuilder resultText = new StringBuilder();
+                            resultText.append("Peso atual: ").append(weight).append("\n");
+                            resultText.append("IMC: ").append(imc).append("\n");
+
+                            String exibirHistorico = "SELECT weight_evolution_id, register_date FROM weight_evolution WHERE client_id = ?";
+                            try(PreparedStatement infoStatement = connection.prepareStatement(exibirHistorico)){
+                                infoStatement.setString(1, client_id);
+                                try(ResultSet infoResult = infoStatement.executeQuery()){
+                                    while (infoResult.next()){
+                                        String weightEvolutionId = infoResult.getString("weight_evolution_id");
+                                        String dataRegistro = infoResult.getString("register_date");
+                                        
+                                        resultText.append("Id: ").append(weightEvolutionId).append("   Data: ").append(dataRegistro).append(", Peso: ").append(weight).append("\n");
+                                    }
+                                }
+                            }
+
+                            JOptionPane.showMessageDialog(this, resultText.toString(), "Histórico de Peso do " + getUserName(client_id), JOptionPane.INFORMATION_MESSAGE);
+                        } catch (NumberFormatException e) {
+                            // Trate aqui se houver erro ao converter para double
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Peso ou altura não encontrados para o CPF informado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Nenhum resultado encontrado para o CPF informado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Usuário não encontrado para o CPF informado.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
-    
     } catch (SQLException e) {
-        e.printStackTrace(); 
+        e.printStackTrace();
     }
+
+
+
+        
             
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -271,6 +307,7 @@ public class HistoricoAluno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;

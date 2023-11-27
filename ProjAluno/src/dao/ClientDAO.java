@@ -37,9 +37,9 @@ public class ClientDAO {
     }
         private Connection getConnection() throws SQLException {
         // Método para estabelecer conexão com o banco de dados
-        String url = "jdbc:mysql://localhost:3306/nome_do_seu_banco";
-        String username = "seu_usuario";
-        String password = "sua_senha";
+        String url = "jdbc:mysql://localhost:3306/gym";
+        String username = "root";
+        String password = "fatec";
         return DriverManager.getConnection(url, username, password);
     }
 
@@ -82,5 +82,25 @@ public class ClientDAO {
             // Tratar exceções
         }
     }
-    
+    public boolean clientExists(String cpf) {
+        boolean exists = false;
+        String sql = "SELECT COUNT(*) AS count FROM users WHERE cpf = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, cpf);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt("count");
+                    exists = count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar cliente existente: " + e.getMessage());
+        }
+
+        return exists;
+    }
+
     }
