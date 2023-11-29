@@ -140,10 +140,8 @@ public class ClientDAO {
                     }
                 }
             }catch (Exception e) {
-        // Trate aqui se houver erro ao converter para double
         }
         } catch (Exception e) {
-        // Trate aqui se houver erro ao converter para double
         }
         return resultados;
     }

@@ -194,7 +194,7 @@ public class HistoricoAluno extends javax.swing.JFrame {
         fileContent.append("Histórico de Peso do ").append(ClientDAO.getUserName(client_id)).append("\n").append("IMC: ").append(imc2).append(" Status IMC: ").append(statusIMC).append("\n");
         
         // Adiciona as informações ao conteúdo do arquivo
-        String exibirHistorico = "SELECT weight_evolution_id, register_date FROM weight_evolution WHERE client_id = ?";
+        String exibirHistorico = "SELECT weight_evolution_id, register_date, weight FROM weight_evolution WHERE client_id = ?";
         
         try (PreparedStatement infoStatement = connection.prepareStatement(exibirHistorico)) {
             infoStatement.setString(1, client_id);
@@ -202,9 +202,9 @@ public class HistoricoAluno extends javax.swing.JFrame {
                 while (infoResult.next()) {
                     String weightEvolutionId = infoResult.getString("weight_evolution_id");
                     String dataRegistro = infoResult.getString("register_date");
-                    
+                    String weightRegister = infoResult.getString("weight");
         
-                    fileContent.append("Id: ").append(weightEvolutionId).append(" Data: ").append(dataRegistro).append(" Peso: ").append(ClientDAO.getWeight(client_id)).append("\n");
+                    fileContent.append("Id: ").append(weightEvolutionId).append(" Data: ").append(dataRegistro).append(" Peso: ").append(weightRegister).append("\n");
                 }
             }
         }
